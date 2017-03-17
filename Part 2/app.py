@@ -20,7 +20,7 @@ details = outputPattern.search(str(link)).groups()
 r = Github()
 
 
-@app.route("/<configName>")
+@app.route("/v1/<configName>")
 def hello(configName):
     try: 
         file = re.compile(r'(\S+)\.(\S+)')
