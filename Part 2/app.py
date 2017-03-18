@@ -1,6 +1,6 @@
 
 
-import sys, re, yaml
+import sys, re, yaml, json
 from github import Github
 
 
@@ -29,17 +29,21 @@ def hello(configName):
         if 'json' != str.lower(fileDetails[1]) and 'yml' != str.lower(fileDetails[1]):
             return "Only Json and yml format supported"
 
-        config = r.get_user(details[0]).get_repo(details[1]).get_contents(fileDetails[0]+".yml").decoded_content
+        config = r.get_user(details[0]).get_repo(details[1]).get_contents(configName).decoded_content
 
-        try:
-            config1 = yaml.load(config)
-        except:
-            return "File is not in Yml format."
+        if 'yml' == str.lower(fileDetails[1]): 
+            try:
+                yaml.load(config)
+                return config
+            except:
+                return "File is not in Yml format."
             
-        if 'yml' == str.lower(fileDetails[1]):        
-            return config
-        else:
-            return str(config1)
+        else:   
+            try:        
+                json.loads(config)
+                return config
+            except:
+                return "File is not in Json format."
     except:
         return "No file found"
 
