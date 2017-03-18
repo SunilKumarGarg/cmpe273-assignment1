@@ -33,14 +33,14 @@ def hello(configName):
 
         if 'yml' == str.lower(fileDetails[1]): 
             try:
-                yaml.load(config)
+                yaml.dump(config)
                 return config
             except:
                 return "File is not in Yml format."
             
         else:   
-            try:        
-                json.loads(config)
+            try:
+                json.dumps(config)
                 return config
             except:
                 return "File is not in Json format."
